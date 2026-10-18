@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | Smart Drive-Thru</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        .track-container {
+            padding: 40px 20px;
+            max-width: 950px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .track-header h2 {
+            font-size: 3rem;
+            color: var(--pure-white);
+            margin: 0 0 10px 0;
+        }
+
+        .track-header span {
+            color: var(--accent-yellow);
+        }
+
+        .order-id {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* 5-Step Timeline Progress Bar */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 50px 10px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 4px;
+            background-color: var(--secondary-black);
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 25%; /* Dynamically updated via JS */
+            height: 4px;
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            z-index: 2;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 3;
+            background-color: var(--primary-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary-black);
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .timeline-step.active .step-icon {
+            background-color: var(--accent-orange);
+            border-color: var(--accent-yellow);
+            color: var(--primary-black);
+            box-shadow: 0 0 15px rgba(255, 111, 0, 0.5);
+        }
+
+        .timeline-step.completed .step-icon {
+            background-color: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            color: var(--primary-black);
+        }
+
+        .step-text {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .timeline-step.active .step-text,
+        .timeline-step.completed .step-text {
+            color: var(--pure-white);
+        }
+
+        /* Status Card */
+        .status-card {
+            background-color: var(--secondary-black);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+            border: 1px solid #333;
+            text-align: left;
+        }
+
+        .status-message {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-yellow);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .status-subtext {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Order Breakdown Panel */
+        .order-details-box {
+            background-color: var(--primary-black);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin-top: 20px;
+        }
+
+        .order-details-box h4 {
+            margin: 0 0 15px 0;
+            color: var(--pure-white);
+            font-size: 1.2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .item-row span:first-child {
+            color: var(--pure-white);
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #333;
+            font-size: 0.95rem;
+            color: var(--accent-yellow);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Locker Box */
+        .locker-display-box {
+            display: none;
+            background-color: var(--primary-black);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px dashed #4CAF50;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .locker-number {
+            font-size: 2.2rem;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .qr-placeholder {
+            background-color: var(--pure-white);
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="track-container">
+        <div class="track-header">
+            <h2>Order <span>Status</span></h2>
+            <p class="order-id">Order <span id="display-id">#SDT-8492</span> • License Plate: <strong id="display-plate">Loading...</strong></p>
+        </div>
+
+        <!-- 5-Step Visual Timeline -->
+        <div class="timeline">
+            <div class="timeline-progress" id="progressBar"></div>
+            
+            <div class="timeline-step completed" id="step1">
+                <div class="step-icon">✔</div>
+                <div class="step-text">Placed</div>
+            </div>
+            <div class="timeline-step active" id="step2">
+                <div class="step-icon" id="step2Icon">2</div>
+                <div class="step-text" id="step2Text">Preparing</div>
+            </div>
+            <div class="timeline-step" id="step3">
+                <div class="step-icon" id="step3Icon">3</div>
+                <div class="step-text" id="step3Text">Ready</div>
+            </div>
+            <div class="timeline-step" id="step4">
+                <div class="step-icon" id="step4Icon">4</div>
+                <div class="step-text" id="step4Text">Arrived</div>
+            </div>
+            <div class="timeline-step" id="step5">
+                <div class="step-icon" id="step5Icon">5</div>
+                <div class="step-text" id="step5Text">Collected</div>
+            </div>
+        </div>
+
+        <!-- Status Card -->
+        <div class="status-card">
+            <div class="status-message" id="statusTitle">Kitchen is Preparing Your Food</div>
+            <div class="status-subtext" id="statusSubtitle">Your order was received and is being prepared fresh.</div>
+
+            <!-- Locker & QR Box (Appears when ready) -->
+            <div class="locker-display-box" id="lockerBox" style="display: none;">
+                <div class="locker-number" id="lockerText">Locker #1 Assigned</div>
+                <p style="margin-top: 0; color: var(--text-muted); margin-bottom: 15px;">Scan code at your assigned locker to retrieve meal:</p>
+                <div style="margin-top:20px;text-align:center;">
+    <h2 id="lockerText"></h2>
+    <p style="color:#4CAF50;font-size:18px;">
+        Locker will open automatically when your vehicle reaches the pickup lane.
+    </p>
+</div>
+            </div>
+
+            <!-- Ordered Items & Time Details -->
+            <div class="order-details-box">
+                <h4>Order Summary & Timeline</h4>
+                <div id="itemsListContainer">
+                    <!-- Populated via JS -->
+                </div>
+                <div class="meta-info">
+                    <span id="orderTimeDisplay">Ordered at: --:--</span>
+                    <span id="prepTimeDisplay">Est. Prep Time: 10 mins</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <script type="module" src="js/track.js"></script>
+</body>
+</html>

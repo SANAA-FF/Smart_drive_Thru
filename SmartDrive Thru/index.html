@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Drive-Thru | Welcome</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+        .hero-title span {
+            color: var(--accent-orange);
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            color: var(--primary-black);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform var(--transition-speed);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <h1 class="hero-title">Smart <span>Drive-Thru</span></h1>
+        <p class="hero-subtitle">
+            Order ahead, drive up, and retrieve your food seamlessly. We detect your arrival and route you to a secure locker. Just scan your QR code and go.
+        </p>
+        <a href="login.html" class="btn-primary">Get Started</a>
+    </div>
+</body>
+</html>

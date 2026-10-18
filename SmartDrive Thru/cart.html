@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Smart Drive-Thru</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .cart-container {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .cart-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-header h2 {
+            font-size: 3rem;
+            color: var(--pure-white);
+            margin: 0;
+        }
+
+        .cart-header span {
+            color: var(--accent-orange);
+        }
+
+        .menu-link {
+            color: var(--primary-black);
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform var(--transition-speed);
+        }
+
+        .menu-link:hover {
+            transform: scale(1.05);
+        }
+
+        /* Left Side: Cart Items */
+        .cart-items-section {
+            flex: 2;
+            min-width: 60%;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--secondary-black);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid var(--accent-yellow);
+            transition: transform var(--transition-speed);
+        }
+
+        .cart-item:hover {
+            transform: translateX(10px);
+        }
+
+        .cart-item-image {
+            width: 150px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 30px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--pure-white);
+            margin: 0 0 10px 0;
+        }
+
+        .cart-item-price {
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .qty-btn {
+            background-color: var(--primary-black);
+            color: var(--pure-white);
+            border: 1px solid #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: border-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .qty-btn:hover {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .qty-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .remove-btn {
+            background: transparent;
+            color: #ff4c4c;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: underline;
+        }
+
+        /* Right Side: Order Summary */
+        .cart-summary-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--secondary-black);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: sticky;
+            top: 40px;
+        }
+
+        .summary-title {
+            font-size: 1.8rem;
+            margin: 0 0 20px 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-yellow);
+            border-top: 2px solid #333;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            color: var(--primary-black);
+            text-align: center;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 30px;
+            transition: transform var(--transition-speed);
+            box-sizing: border-box;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <div class="cart-header">
+            <h2>Your <span>Cart</span></h2>
+            <a href="menu.html" class="menu-link">Back to Menu</a>
+        </div>
+
+        <!-- Left Side: Dynamic Cart Items Section -->
+        <div class="cart-items-section" id="cartItemsContainer">
+            <!-- Items selected from menu will load here dynamically -->
+        </div>
+
+        <!-- Right Side: Sticky Order Summary -->
+        <div class="cart-summary-section">
+            <h3 class="summary-title">Order Summary</h3>
+            
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>$0.00</span>
+            </div>
+            <div class="summary-line">
+                <span>Tax (8%)</span>
+                <span>$0.00</span>
+            </div>
+            
+            <div class="summary-total">
+                <span>Total</span>
+                <span>$0.00</span>
+            </div>
+
+            <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+        </div>
+    </div>
+
+    <script src="js/cart.js" type="module"></script>
+</body>
+</html>

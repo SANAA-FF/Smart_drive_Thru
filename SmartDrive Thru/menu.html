@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Smart Drive-Thru</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Menu Specific Styles */
+        .menu-container {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+        
+        .menu-header h2 {
+            font-size: 3rem;
+            color: var(--pure-white);
+            margin: 0;
+        }
+        
+        .menu-header span {
+            color: var(--accent-yellow);
+        }
+
+        /* Cart Icon/Link in the header */
+        .cart-link {
+            color: var(--primary-black);
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform var(--transition-speed);
+        }
+
+        .cart-link:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background-color: var(--secondary-black);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border: 2px solid transparent;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed), border-color var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(255, 111, 0, 0.2);
+            border-color: var(--accent-orange);
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent-yellow);
+        }
+
+        .menu-details {
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .menu-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--pure-white);
+            margin: 0 0 10px 0;
+        }
+
+        .menu-price {
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0 0 20px 0;
+        }
+
+        .add-to-cart-btn {
+            background-color: transparent;
+            color: var(--accent-orange);
+            border: 2px solid var(--accent-orange);
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            margin-top: auto;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--accent-orange);
+            color: var(--primary-black);
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-header">
+            <h2>Our <span>Menu</span></h2>
+            <a href="cart.html" class="cart-link" id="cartBtn">
+    🛒 View Cart (<span id="cartCount">0</span>)
+</a>
+        </div>
+        
+        <div class="menu-grid" id="menuContainer">
+            <!-- Menu Item 1 -->
+            <div class="menu-item">
+                <img src="images/burger.jpg" alt="Classic Burger" class="menu-image">
+                <div class="menu-details">
+                    <h3 class="menu-name">Classic Burger</h3>
+                    <p class="menu-price">$8.99</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Menu Item 2 -->
+            <div class="menu-item">
+                <img src="images/fries.jpg" alt="Crispy Fries" class="menu-image">
+                <div class="menu-details">
+                    <h3 class="menu-name">Crispy Fries</h3>
+                    <p class="menu-price">$3.49</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Menu Item 3 -->
+            <div class="menu-item">
+                <img src="images/pizza.jpg" alt="Pepperoni Pizza" class="menu-image">
+                <div class="menu-details">
+                    <h3 class="menu-name">Pepperoni Pizza</h3>
+                    <p class="menu-price">$12.99</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="menu-item">
+                <img src="images/drink.jpg" alt="Iced Cola" class="menu-image">
+                <div class="menu-details">
+                    <h3 class="menu-name">Iced Cola</h3>
+                    <p class="menu-price">$2.99</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/menu.js"></script>
+</body>
+</html>

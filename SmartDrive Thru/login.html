@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Smart Drive-Thru</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .auth-box {
+            background-color: var(--secondary-black);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 111, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .toggle-container {
+            display: flex;
+            background-color: var(--primary-black);
+            border-radius: 30px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .toggle-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1;
+            transition: color var(--transition-speed);
+        }
+        .toggle-btn.active {
+            color: var(--primary-black);
+        }
+        .toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            border-radius: 30px;
+            transition: left var(--transition-speed);
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-black);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: var(--pure-white);
+            box-sizing: border-box;
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: var(--accent-yellow);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-orange);
+            color: var(--primary-black);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color var(--transition-speed);
+        }
+        .submit-btn:hover {
+            background-color: var(--accent-yellow);
+        }
+        .auth-form {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .auth-form.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="toggle-container">
+                <div class="toggle-slider" id="slider"></div>
+                <button class="toggle-btn active" id="loginToggle" onclick="switchForm('login')">Login</button>
+                <button class="toggle-btn" id="signupToggle" onclick="switchForm('signup')">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Welcome Back</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Vehicle License Plate (Optional)">
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Create Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 1. The existing UI toggle code
+        function switchForm(formType) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const slider = document.getElementById('slider');
+            const loginToggle = document.getElementById('loginToggle');
+            const signupToggle = document.getElementById('signupToggle');
+
+            if (formType === 'signup') {
+                loginForm.classList.remove('active');
+                signupForm.classList.add('active');
+                slider.style.left = '50%';
+                loginToggle.classList.remove('active');
+                signupToggle.classList.add('active');
+            } else {
+                signupForm.classList.remove('active');
+                loginForm.classList.add('active');
+                slider.style.left = '0';
+                signupToggle.classList.remove('active');
+                loginToggle.classList.add('active');
+            }
+        }
+
+        // 2. New code to handle the Login redirect
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            // Stop the page from refreshing
+            event.preventDefault(); 
+            
+            // Redirect the user to the menu page
+            window.location.href = 'menu.html';
+        });
+
+        // 3. New code to handle the Sign Up redirect
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            // Stop the page from refreshing
+            event.preventDefault(); 
+            
+            // Redirect the user to the menu page
+            window.location.href = 'menu.html';
+        });
+    </script>
+</body>
+</html>

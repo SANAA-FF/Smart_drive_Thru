@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Smart Drive-Thru</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .checkout-container {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .checkout-header h2 {
+            font-size: 3rem;
+            color: var(--pure-white);
+            margin: 0;
+        }
+
+        .checkout-header span {
+            color: var(--accent-orange);
+        }
+
+        .checkout-card {
+            background-color: var(--secondary-black);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--pure-white);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-black);
+            border: 1px solid #333;
+            color: var(--pure-white);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-orange);
+            outline: none;
+        }
+
+        .addons-section {
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+
+        .addons-section h3 {
+            font-size: 1.4rem;
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-orange);
+            cursor: pointer;
+        }
+
+        .order-summary-box {
+            margin-top: 30px;
+            border-top: 2px solid #333;
+            padding-top: 20px;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--accent-yellow);
+            border-top: 2px solid #333;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .place-order-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-yellow));
+            color: var(--primary-black);
+            text-align: center;
+            padding: 16px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform var(--transition-speed);
+        }
+
+        .place-order-btn:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h2>Complete Your <span>Checkout</span></h2>
+        </div>
+
+        <div class="checkout-card">
+            <!-- License Plate Input Group -->
+            <div class="form-group">
+                <label for="vehicleNumber">Vehicle License Plate Number</label>
+                <input id="vehicleNumber" class="form-input">
+            </div>
+ 
+            <!-- Expected Drive-Thru Arrival Time -->
+            <div class="form-group">
+                <label for="arrival-time">Estimated Drive-Thru Arrival Time</label>
+                <input id="arrivalTime" class="form-input" type="time">
+            </div>
+
+            <!-- Add-ons Section -->
+            <div class="addons-section">
+                <h3>Quick Add-ons</h3>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="premium-addon" data-price="2.50"> Cheese(+₹25)
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="premium-addon" data-price="1.99"> Mayonaise  (+₹20)
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="premium-addon" data-price="0.50"> sauce(+₹10)
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="premium-addon" data-price="1.50"> Sugar (+₹15)
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="premium-addon" data-price="0.99"> Salt (+₹10)
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" class="premium-addon" data-price="1.50"> Salad (+₹20)
+                </label>
+            </div>
+
+            <!-- Order Total Summary -->
+            <div class="order-summary-box">
+                <div class="summary-line">
+                    <span>Items Subtotal</span>
+                    <span id="subtotal-display">₹0.00</span>
+                </div>
+                <div class="summary-total">
+                    <span>Grand Total</span>
+                    <span id="grand-total">₹0.00</span>
+                </div>
+            </div>
+
+            <button id="placeOrderBtn" class="place-order-btn">
+                    Place Order & Track
+            </button>
+        </div>
+    </div>
+
+    <script type="module" src="js/checkout.js"></script>
+</body>
+</html>
